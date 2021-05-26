@@ -1,10 +1,11 @@
 const express = require("express")
 const router = express.Router();
+const chatbotController = require("../controller/chatbotController")
 
 const initRoute = (app) => {
-    router.route('/').get((req,res) => {
-        res.send("Hello world !")
-    })
+    router.route('/webhook').post(chatbotController.postWebhook)
+    router.route('/webhook').get(chatbotController.getWebhook)
+ 
     return app.use("/",router)
 }
 
