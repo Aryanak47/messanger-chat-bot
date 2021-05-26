@@ -4,6 +4,9 @@ const chatbotController = require("../controller/chatbotController")
 
 const initRoute = (app) => {
     router.route('/webhook').post(chatbotController.postWebhook)
+    router.route('/').get((req, res) =>{
+        res.send("home page")
+    })
     router.route('/webhook').get(chatbotController.getWebhook)
  
     return app.use("/",router)
