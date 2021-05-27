@@ -23,6 +23,9 @@ exports.setUpUserFacebookProfile = async (req, res) => {
     // Send the HTTP request to the Messenger Platform
     try{
         await setUpMessengerPlatform();
+        console.log("---------------")
+        console.log("made it !")
+        console.log("---------------")
         return res.status(200).json({
             message: "OK"
         });

@@ -3,10 +3,8 @@ const chatServices = require("../services/chatbotServices")
 let firstMessage = true
 // Creates the endpoint for our webhook 
 exports.postWebhook=  (req, res) => { 
-  if(firstMessage){
     chatServices.setUpUserFacebookProfile(req,res)
-    firstMessage=false
-  }
+ 
 
     // Parse the request body from the POST
     let body = req.body;
