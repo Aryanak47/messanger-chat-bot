@@ -4,7 +4,7 @@ let firstMessage = true
 // Creates the endpoint for our webhook 
 exports.postWebhook=  (req, res) => { 
   if(firstMessage){
-    chatServices.setUpUserFacebookProfile()
+    chatServices.setUpUserFacebookProfile(req,res)
     firstMessage=false
   }
 
