@@ -19,7 +19,21 @@ exports.getUserName = (id) =>{
     })
 }
 
-exports.setUpMessengerPlatform = () => {
+exports.setUpUserFacebookProfile = async (req, res) => {
+    // Send the HTTP request to the Messenger Platform
+    try{
+        await setUpMessengerPlatform();
+        return res.status(200).json({
+            message: "OK"
+        });
+    }catch (e) {
+        return res.status(500).json({
+            "message": "Error from the node server"
+        })
+    }
+}
+
+const setUpMessengerPlatform = () => {
     return new Promise((resolve, reject) => {
         try {
             let data = {
@@ -49,8 +63,10 @@ exports.setUpMessengerPlatform = () => {
                 "json": data
             }, (err, res, body) => {
                 if (!err) {
+                    console.log("done")
                     resolve("setup done!");
                 } else {
+                    console.log("error ",err)
                     reject(err);
                 }
             });

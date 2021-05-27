@@ -2,9 +2,9 @@ const request = require('request');
 const chatServices = require("../services/chatbotServices")
 let firstMessage = true
 // Creates the endpoint for our webhook 
-exports.postWebhook= async (req, res) => { 
+exports.postWebhook=  (req, res) => { 
   if(firstMessage){
-    await chatServices.setUpMessengerPlatform()
+    chatServices.setUpUserFacebookProfile()
     firstMessage=false
   }
 
