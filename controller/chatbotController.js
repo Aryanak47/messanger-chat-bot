@@ -1,7 +1,12 @@
 const request = require('request');
-
+const chatServices = require("../services/chatbotServices")
+let firstMessage = true
 // Creates the endpoint for our webhook 
-exports.postWebhook= (req, res) => {  
+exports.postWebhook= (req, res) => { 
+  if(firstMessage){
+    chatServices.setUpMessengerPlatform()
+    firstMessage=false
+  }
 
     // Parse the request body from the POST
     let body = req.body;
@@ -154,6 +159,4 @@ function callSendAPI(sender_psid, response) {
       console.error("Unable to send message:" + err);
     }
   }); 
-  
-  
 }
