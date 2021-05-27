@@ -2,8 +2,8 @@ const request = require('request');
 const chatServices = require("../services/chatbotServices")
 let firstMessage = true
 // Creates the endpoint for our webhook 
-exports.postWebhook=  (req, res) => { 
-    chatServices.setUpUserFacebookProfile(req,res)
+exports.postWebhook=   (req, res) => { 
+    return chatServices.setupGetStartedButton(res)
  
 
     // Parse the request body from the POST

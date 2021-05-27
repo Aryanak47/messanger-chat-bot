@@ -1,5 +1,5 @@
 
-
+const request = require('request')
 
 exports.getUserName = (id) =>{
     return new Promise((resolve,reject) => {
@@ -19,63 +19,44 @@ exports.getUserName = (id) =>{
     })
 }
 
-exports.setUpUserFacebookProfile = async (req, res) => {
-    // Send the HTTP request to the Messenger Platform
-    try{
-        await setUpMessengerPlatform();
-        console.log("---------------")
-        console.log("made it !")
-        console.log("---------------")
-        return res.status(200).json({
-            message: "OK"
-        });
-    }catch (e) {
-        return res.status(500).json({
-            "message": "Error from the node server"
-        })
-    }
-}
-
-const setUpMessengerPlatform = () => {
-    return new Promise((resolve, reject) => {
-        try {
-            let data = {
-                "get_started": {
-                    "payload": "GET_STARTED"
-                },
-                "persistent_menu": [
+exports.setupGetStartedButton = (res) =>{
+    var messageData = {
+        "get_started": {
+            "payload": "GET_STARTED"
+        },
+        "persistent_menu": [
+            {
+                "locale": "default",
+                "composer_input_disabled": false,
+                "call_to_actions": [
                     {
-                        "locale": "default",
-                        "composer_input_disabled": false,
-                        "call_to_actions": [
-                            {
-                                "type": "web_url",
-                                "title": "View Facebook Fan Page",
-                                "url": "https://www.facebook.com/TECHNEPA",
-                                "webview_height_ratio": "full"
-                            },
-                        ]
-                    }
-                ],
-            };
+                        "type": "web_url",
+                        "title": "View Facebook Fan Page",
+                        "url": "https://www.facebook.com/TECHNEPA",
+                        "webview_height_ratio": "full"
+                    },
+                ]
+            }
+        ],
+    };
 
-            request({
-                "uri": "https://graph.facebook.com/v6.0/me/messenger_profile",
-                "qs": { "access_token":FB_PAGE_TOKEN },
-                "method": "POST",
-                "json": data
-            }, (err, res, body) => {
-                if (!err) {
-                    console.log("done")
-                    resolve("setup done!");
-                } else {
-                    console.log("error ",err)
-                    reject(err);
-                }
-            });
+    // Start the request
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messenger_profile?access_token='+process.env.FB_PAGE_TOKEN,
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        form: messageData
+    },
+    function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            // Print out the response body
+            console.log("done------------------------------>")
+            res.send(body);
+            
 
-        } catch (e) {
-            reject(e);
+        } else { 
+            // TODO: Handle errors
+            res.send(body);
         }
     });
-}
+}        
