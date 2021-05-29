@@ -119,14 +119,13 @@ exports.talkToAgent = (id) => {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             form: messageData
-            }, function (error, response, body) {
+            }, async function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     let r = { "text": "Bot is off!" }
-                     sendMessage(r,id)
-                    resolve("done")
+                     await sendMessage(r,id)
                 } else { 
                     console.log("errrrr",error);
-                    reject(error)
+                   
                 
                 }
             });
@@ -134,10 +133,8 @@ exports.talkToAgent = (id) => {
 
 }
 exports.talkToBot = (id) => {
-    return new Promise((resolve,reject) => {
         // Send the HTTP request to the Messenger Platform
          // Send the HTTP request to the Messenger Platform
-        try {
             let messageData = {
                 "recipient":{"id":id}
             };
@@ -151,19 +148,12 @@ exports.talkToBot = (id) => {
                 if (!error && response.statusCode == 200) {
                     let  response = {"text": `Bot is on !`}
                     await sendMessage(response,id)
-                    resolve("done")
+                    console.log("message sent")
+                   
                 } else { 
-                    reject(error)
-                
+                    console.log(error);
                 }
             });
-        } catch (error) {
-            reject(error)
-             
-        }
-
-    })
-
 }
         
 
