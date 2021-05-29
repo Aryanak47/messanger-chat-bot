@@ -152,8 +152,7 @@ exports.talkToBot = (id) => {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             form: messageData
-            },
-            function (error, response, body) {
+            },async(error, response, body) => {
                 if (!error && response.statusCode == 200) {
                     let  response = {"text": `Bot is on !`}
                     await sendMessage(response,id)
