@@ -45,6 +45,12 @@ exports.setupQuickReply = (id) =>{
                 "payload":"WEBSITE",
                 
                 }
+                ,{
+                "content_type":"text",
+                "title":"Talk to agent",
+                "payload":"AGENT",
+                
+                }
             ]
             }
         }
@@ -59,7 +65,6 @@ exports.setupQuickReply = (id) =>{
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 // Print out the response body
-                console.log("done------------------------------>")
                 return;
                 
 
@@ -97,6 +102,71 @@ const sendMessage = (response,id) => {
                 reject("Unable to send message:" + err);
             }
         }); 
+
+    })
+
+}
+exports.talkToAgent = (id) => {
+    return new Promise((resolve,reject) => {
+        // Send the HTTP request to the Messenger Platform
+         // Send the HTTP request to the Messenger Platform
+        try {
+            let messageData = {
+                "recipient":{"id":id},
+                "target_app_id":process.env.PAGE_INBOX_ID
+            };
+            // Start the request
+            request({
+            url: 'https://graph.facebook.com/v2.6/me/pass_thread_control?access_token='+process.env.FB_PAGE_TOKEN,
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            form: messageData
+            },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    resolve("done")
+                } else { 
+                    reject(error)
+                
+                }
+            });
+        } catch (error) {
+            reject(error)
+             
+        }
+
+    })
+
+}
+exports.talkToBot = (id) => {
+    return new Promise((resolve,reject) => {
+        // Send the HTTP request to the Messenger Platform
+         // Send the HTTP request to the Messenger Platform
+        try {
+            let messageData = {
+                "recipient":{"id":id}
+            };
+            // Start the request
+            request({
+            url: 'https://graph.facebook.com/v2.6/me/take_thread_control?access_token='+process.env.FB_PAGE_TOKEN,
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            form: messageData
+            },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    let  response = {"text": `Bot is on !`}
+                    await sendMessage(response,id)
+                    resolve("done")
+                } else { 
+                    reject(error)
+                
+                }
+            });
+        } catch (error) {
+            reject(error)
+             
+        }
 
     })
 

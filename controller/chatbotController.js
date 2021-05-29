@@ -12,6 +12,18 @@ exports.postWebhook=   (req, res) => {
   
       // Iterate over each entry - there may be multiple if batched
       body.entry.forEach(function(entry) {
+
+        if (entry.standby) {
+          let webhook_standby = entry.standby[0];
+          if(webhook_standby && webhook_standby.message){
+              if (webhook_standby.message.text === "back" || webhook_standby.message.text === "exit") {
+                  //if user's message is "back" or "exit", return the conversation to the bot
+                  chatServices.talkToBot(webhook_standby.sender.id);
+              }
+          }
+
+          return;
+        }
           // Gets the body of the webhook event
         let webhook_event = entry.messaging[0];
         console.log(webhook_event);
@@ -78,23 +90,25 @@ const  handleMessage = async (sender_psid, received_message) => {
     let response;
 
     if (received_message && received_message.quick_reply && received_message.quick_reply.payload) {
-      if (received_message.quick_reply.payload === "BOOKS" || received_message.quick_reply.payload === "PROFILE" || received_message.quick_reply.payload === "WEBSITE") {
-        //asking about phone number
-        if (received_message.quick_reply.payload === "BOOKS"){
-          return await chatServices.showBooks(sender_psid)
-          
-        }
-        else if (received_message.quick_reply.payload === "PROFILE") {
-          response = {"text": `https://github.com/Aryanak47`}
-          return  callSendAPI(sender_psid, response);
-        }
-        else if (received_message.quick_reply.payload === "WEBSITE"){
-          response = {"text": `https://github.com/Aryanak47`}
-          return  callSendAPI(sender_psid, response);
+      //asking about phone number
+      if (received_message.quick_reply.payload === "BOOKS"){
+        return await chatServices.showBooks(sender_psid)
+        
+      }
+      else if (received_message.quick_reply.payload === "PROFILE") {
+        response = {"text": `https://github.com/Aryanak47`}
+        return  callSendAPI(sender_psid, response);
+      }
+      else if (received_message.quick_reply.payload === "WEBSITE"){
+        response = {"text": `https://github.com/Aryanak47`}
+        return  callSendAPI(sender_psid, response);
 
-        }
-    }
-
+      }
+      else if (received_message.quick_reply.payload === "AGENT"){
+        response = { "text": "Bot is off!" }
+        await chatServices.talkToAgent(sender_psid)
+        return   callSendAPI(sender_psid, response);
+      }
     }
   // Check if the received_message contains text
     else if(received_message.text) {    
