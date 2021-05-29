@@ -147,16 +147,16 @@ function handlePostback(sender_psid, received_postback) {
   // Set the response based on the postback payload
   switch (payload) {
     case "SPORT":
-      response = { "text": "Oops, not available !" }
+      response = { "text": "Oops, not available!" }
       break;
     case "CODE":
-      response = { "text": "Oops, not available !" }
+      response = { "text": "Oops, not available!" }
       break;
     case "SELF":
-      response = { "text": "Oops, not available !" }
+      response = { "text": "Oops, not available!" }
       break;
     case "SCIENCE":
-      response = { "text": "Oops, not available !" }
+      response = { "text": "Oops, not available!" }
       break;
     default:
       return chatServices.setupQuickReply(sender_psid)
