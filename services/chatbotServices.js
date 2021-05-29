@@ -20,7 +20,7 @@ exports.getUserName = (id) =>{
 }
 
        
-exports.setupQuickReply = (res,id) =>{
+exports.setupQuickReply = (id) =>{
     var messageData = {
         "recipient":{
           "id":id
@@ -55,12 +55,13 @@ exports.setupQuickReply = (res,id) =>{
         if (!error && response.statusCode == 200) {
             // Print out the response body
             console.log("done------------------------------>")
-            res.send(body);
+            return;
             
 
         } else { 
             // TODO: Handle errors
-            res.send(body);
+            return ;
+           
         }
     });
 }        

@@ -22,9 +22,8 @@ exports.postWebhook=   (req, res) => {
       
         console.log('Sender PSID: ' + sender_psid);
         if(firstMessage){
-          chatServices.setupQuickReply(res,sender_psid)
+          chatServices.setupQuickReply(sender_psid)
           firstMessage=false
-          return;
 
         }
        
