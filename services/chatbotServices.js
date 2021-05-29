@@ -121,11 +121,10 @@ exports.talkToAgent = (id) => {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             form: messageData
-            },
-            async function (error, response, body) {
+            }, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     let r = { "text": "Bot is off!" }
-                    await sendMessage(r,id)
+                     sendMessage(r,id)
                     resolve("done")
                 } else { 
                     reject(error)
