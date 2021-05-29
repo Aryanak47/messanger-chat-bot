@@ -106,7 +106,7 @@ const  handleMessage = async (sender_psid, received_message) => {
       }
       else if (received_message.quick_reply.payload === "AGENT"){
         console.log("Agennt");
-        return await chatServices.talkToAgent(sender_psid);
+        return  chatServices.talkToAgent(sender_psid);
         
       }
     }

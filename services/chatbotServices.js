@@ -107,10 +107,8 @@ const sendMessage = (response,id) => {
 
 }
 exports.talkToAgent = (id) => {
-    return new Promise((resolve,reject) => {
         // Send the HTTP request to the Messenger Platform
          // Send the HTTP request to the Messenger Platform
-        try {
             let messageData = {
                 "recipient":{"id":id},
                 "target_app_id":process.env.PAGE_INBOX_ID
@@ -127,16 +125,12 @@ exports.talkToAgent = (id) => {
                      sendMessage(r,id)
                     resolve("done")
                 } else { 
+                    console.log("errrrr",error);
                     reject(error)
                 
                 }
             });
-        } catch (error) {
-            reject(error)
-             
-        }
-
-    })
+       
 
 }
 exports.talkToBot = (id) => {
