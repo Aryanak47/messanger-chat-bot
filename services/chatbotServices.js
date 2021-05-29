@@ -51,7 +51,7 @@ exports.setupQuickReply = (id) =>{
 
         // Start the request
         request({
-            url: 'https://graph.facebook.com/v10.0/me/messages?access_token='+process.env.FB_PAGE_TOKEN,
+            url: 'https://graph.facebook.com/v6.0/me/messages?access_token='+process.env.FB_PAGE_TOKEN,
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             form: messageData

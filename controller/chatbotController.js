@@ -145,10 +145,21 @@ function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  if (payload === 'RED') {
-    response = { "text": "Thanks!" }
-  } else if (payload === 'GREEN') {
-    response = { "text": "Oops, try sending another image." }
+  switch (payload) {
+    case SPORT:
+      response = { "text": "Oops, not available !" }
+      break;
+    case CODE:
+      response = { "text": "Oops, not available !" }
+      break;
+    case SELF:
+      response = { "text": "Oops, not available !" }
+      break;
+    case SCIENCE:
+      response = { "text": "Oops, not available !" }
+      break;
+    default:
+      return chatServices.setupQuickReply(sender_psid)
   }
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
