@@ -112,17 +112,18 @@ exports.talkToAgent = (id) => {
             "recipient": {
                 "id": id
             },
-            "target_app_id": PAGE_INBOX_ID,
+            "target_app_id": process.env.PAGE_INBOX_ID,
             "metadata":"Pass this conversation to the page inbox"
         };
 
         // Send the HTTP request to the Messenger Platform
         request({
-            "uri": `https://graph.facebook.com/v6.0/me/pass_thread_control?access_token=${FB_PAGE_TOKEN}`,
+            "uri": `https://graph.facebook.com/v6.0/me/pass_thread_control?access_token=${process.env.FB_PAGE_TOKEN}`,
             "method": "POST",
             "json": request_body
         }, (err, res, body) => {
             if (!err) {
+                console.log("done !!!");
                 resolve("done")
             } else {
                reject("Unable to send message:" + err);

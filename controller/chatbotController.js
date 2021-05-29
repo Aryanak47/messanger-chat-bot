@@ -106,8 +106,9 @@ const  handleMessage = async (sender_psid, received_message) => {
       }
       else if (received_message.quick_reply.payload === "AGENT"){
         console.log("Agennt");
+        console.log(PAGE_INBOX_ID);
         response = {"text": `Bot is off !`}
-        chatServices.talkToAgent(sender_psid);
+        await chatServices.talkToAgent(sender_psid);
         
       }
     }
