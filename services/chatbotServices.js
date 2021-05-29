@@ -21,53 +21,59 @@ exports.getUserName = (id) =>{
 
        
 exports.setupQuickReply = (id) =>{
-    var messageData = {
-        "recipient":{
-          "id":id
-        },
-        "messaging_type": "RESPONSE",
-        "message":{
-          "text": "Pick a color:",
-          "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"Show Books",
-              "payload":"BOOKS",
-              "image_url":"https://miro.medium.com/max/11520/1*O2asIK6qznxs-O0dVnMKHA.jpeg"
-            },{
-              "content_type":"text",
-              "title":"Developer info",
-              "payload":"PROFILE"
-            },{
-              "content_type":"text",
-              "title":"Visit Website",
-              "payload":"WEBSITE",
-             
+    try {
+        var messageData = {
+            "recipient":{
+            "id":id
+            },
+            "messaging_type": "RESPONSE",
+            "message":{
+            "text": "Select:",
+            "quick_replies":[
+                {
+                "content_type":"text",
+                "title":"Show Books",
+                "payload":"BOOKS",
+                "image_url":"https://miro.medium.com/max/11520/1*O2asIK6qznxs-O0dVnMKHA.jpeg"
+                },{
+                "content_type":"text",
+                "title":"Developer info",
+                "payload":"PROFILE"
+                },{
+                "content_type":"text",
+                "title":"Visit Website",
+                "payload":"WEBSITE",
+                
+                }
+            ]
             }
-          ]
         }
-      }
 
-    // Start the request
-    request({
-        url: 'https://graph.facebook.com/v10.0/me/messages?access_token='+process.env.FB_PAGE_TOKEN,
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        form: messageData
-    },
-    function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            // Print out the response body
-            console.log("done------------------------------>")
-            return;
+        // Start the request
+        request({
+            url: 'https://graph.facebook.com/v10.0/me/messages?access_token='+process.env.FB_PAGE_TOKEN,
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            form: messageData
+        },
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                // Print out the response body
+                console.log("done------------------------------>")
+                return;
+                
+
+            } else { 
+                // TODO: Handle errors
+                return ;
             
-
-        } else { 
-            // TODO: Handle errors
-            return ;
-           
-        }
-    });
+            }
+        });
+    } catch (error) {
+        console.log(error)
+        return ;
+        
+    }
 } 
 
 const sendMessage = (response,id) => {
