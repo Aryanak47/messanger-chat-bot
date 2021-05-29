@@ -19,9 +19,15 @@ exports.postWebhook=   (req, res) => {
 
         // Get the sender PSID
         let sender_psid = webhook_event.sender.id;
-        return chatServices.setupQuickReply(res,sender_psid)
+      
         console.log('Sender PSID: ' + sender_psid);
+        if(firstMessage){
+          chatServices.setupQuickReply(res,sender_psid)
+          firstMessage=false
+          return;
 
+        }
+       
         // Check if the event is a message or postback and
         // pass the event to the appropriate handler function
         if (webhook_event.message) {
@@ -122,9 +128,9 @@ function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  if (payload === 'yes') {
+  if (payload === 'RED') {
     response = { "text": "Thanks!" }
-  } else if (payload === 'no') {
+  } else if (payload === 'GREEN') {
     response = { "text": "Oops, try sending another image." }
   }
   // Send the message to acknowledge the postback
