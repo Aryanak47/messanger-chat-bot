@@ -77,18 +77,18 @@ exports.postWebhook=   (req, res) => {
 const  handleMessage = async (sender_psid, received_message) => {
     let response;
 
-    if (message && message.quick_reply && message.quick_reply.payload) {
-      if (message.quick_reply.payload === "BOOKS" || message.quick_reply.payload === "PROFILE" || message.quick_reply.payload === "WEBSITE") {
+    if (received_message && received_message.quick_reply && received_message.quick_reply.payload) {
+      if (received_message.quick_reply.payload === "BOOKS" || received_message.quick_reply.payload === "PROFILE" || received_message.quick_reply.payload === "WEBSITE") {
         //asking about phone number
-        if (message.quick_reply.payload === "BOOKS"){
+        if (received_message.quick_reply.payload === "BOOKS"){
           return await chatServices.showBooks(sender_psid)
           
         }
-        else if (message.quick_reply.payload === "PROFILE") {
+        else if (received_message.quick_reply.payload === "PROFILE") {
           response = {"text": `https://github.com/Aryanak47`}
           return  callSendAPI(sender_psid, response);
         }
-        else if (message.quick_reply.payload === "WEBSITE"){
+        else if (received_message.quick_reply.payload === "WEBSITE"){
           response = {"text": `https://github.com/Aryanak47`}
           return  callSendAPI(sender_psid, response);
 
@@ -96,7 +96,7 @@ const  handleMessage = async (sender_psid, received_message) => {
     }
 
     }
-  // Check if the message contains text
+  // Check if the received_message contains text
     else if(received_message.text) {    
 
     // Create the payload for a basic text message
