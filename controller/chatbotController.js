@@ -105,9 +105,9 @@ const  handleMessage = async (sender_psid, received_message) => {
 
       }
       else if (received_message.quick_reply.payload === "AGENT"){
-        response = { "text": "Bot is off!" }
-        await chatServices.talkToAgent(sender_psid)
-        return   callSendAPI(sender_psid, response);
+        console.log("Agennt");
+        return await chatServices.talkToAgent(sender_psid);
+        
       }
     }
   // Check if the received_message contains text
