@@ -3,9 +3,7 @@ const chatServices = require("../services/chatbotServices")
 let firstMessage = true
 // Creates the endpoint for our webhook 
 exports.postWebhook=   (req, res) => { 
-    return chatServices.setupGetStartedButton(res)
- 
-
+   
     // Parse the request body from the POST
     let body = req.body;
   
@@ -21,6 +19,7 @@ exports.postWebhook=   (req, res) => {
 
         // Get the sender PSID
         let sender_psid = webhook_event.sender.id;
+        return chatServices.setupQuickReply(res,sender_psid)
         console.log('Sender PSID: ' + sender_psid);
 
         // Check if the event is a message or postback and
